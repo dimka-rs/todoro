@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Crappy Todo List</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <style type="text/css">
+      .header { 
+        color: #1abc9c;
+	margin: 10px auto;
+	text-align: center;
+      }
+
+      .add {
+	margin: 10px auto;
+	background: lightgray;
+	padding: 10px;
+	text-align: center;
+	}
+
+      .rem {
+	float: right;
+        margin-left: 15px;
+	margin-bottom: 15px;
+        background-color: #ffc;
+        color: red;
+        cursor: pointer;
+      }
+
+      .item {
+        cursor: pointer;
+	min-height: 30px;
+	width: 200px;
+	background-color: #ffc;
+	border: solid 2px black;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 10px auto;
+	text-align: justify;
+	text-justify: inter-word;
+      }
+
+      .done {
+        text-decoration: line-through;
+	background: lightgray;
+      }
+
+      .app {
+	width: 300px;
+	border: dashed 1px black;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="header"><h1>Crappy Todo List</h1></div>
+      <div class="add">
+        <input type="text" placeholder="New task" />
+        <button id="add">Add</button>
+      </div>
+      <div id="crappylist"></div>
+    </div>
+    <script>
+      function addEntry(t) {
+                var elem = $("<div class='item'><div class='rem'><button>X</button></div><div class='content'></div></div>");
+                $(elem).append(t);
+                $("#crappylist").append(elem);
+                $("input").val("");
+                $(".rem").on("click", function() {
+                    $(this).parent().hide(1000, function() { 
+                        $(this).remove();
+                        }
+                    );
+                });
+                $(".item").on("click", function() {
+		    console.log($(this).text() + "clicked");
+                    $(this).toggleClass("done");
+                });
+
+      }
+
+      $(function() {
+	addEntry("Test entry with some long text inside to make things harder and check if text floats around delete button. What do you think?");
+        $("#add").on("click", function() {
+            var val = $("input").val();
+            if(val !== '') {
+		addEntry(val);
+            };
+        });
+
+	$("input").on("keydown", function(e) {
+		if(e.which == 13) {
+		    var val = $("input").val();
+        	    if(val !== '') {
+                        addEntry(val);
+                    };
+		}
+	});
+     });
+
+    </script>
+  </body>
+</html>
